@@ -12,7 +12,7 @@ Knockout.Programmatic has been tested with v1.2.1 of KnockoutJS. If you run into
 
 The main purpose of Knockout.Programmatic is to move from a declarative binding syntax to a programmatic one. This has two major benefits:
 * It allows for the javascript and html to be less tightly coupled.
-* It is easier to debug, because the data-binding process can be walked through with a debugger
+* It is easier to debug, because the data-binding process can be walked through with a debugger.
 
 To get started download [KnockoutJS] (http://knockoutjs.com), jQuery, and this plugin and include them on your page.
 
@@ -24,7 +24,7 @@ To get started download [KnockoutJS] (http://knockoutjs.com), jQuery, and this p
 
 ### Compared to Traditional Knockout
 
-To get a feel of the difference between the declarative data-bind syntax of knockout and this programmatic one, lets look at an [example] (http://jsfiddle.net/AdamPflug/MeXpc/) (working jsfiddle).
+To get a feel of the difference between the declarative data-bind syntax of knockout and this programmatic one, let's look at an [example] (http://jsfiddle.net/AdamPflug/MeXpc/) (working jsfiddle).
 
 
 #### Traditional Knockout
@@ -44,14 +44,14 @@ The next step is to bind the view model to our view. With declarative binding we
 <div>Hello <span data-bind="name"></span>!</div>
 ```
 
-We also need to tell Knockout to look through the dom, parse all the data-bind attributes it finds, and apply those data-bindings.
+We also need to tell Knockout to look through the DOM, parse all the data-bind attributes it finds, and apply those data-bindings.
 
 ```javascript
 ko.applyBindings(viewModel);
 ```
 
 #### Knockout with Programmatic Binding
-With programmatic bind we can keep out html clean:
+With programmatic binding we can keep our html clean:
 
 ```html
 <label for="name">Name: </label>
@@ -59,7 +59,7 @@ With programmatic bind we can keep out html clean:
 <div id="greeting">Hello <span></span>!</div>
 ```
 
-Then define our view model and bind the data in javascript. Note that we no longer need to call ```ko.applyBindings```.
+Then, we define our view model and data-bind in javascript. Note that we no longer need to call ```ko.applyBindings```.
 
 ```javascript
 var viewModel = {
@@ -73,13 +73,14 @@ $('#greeting span').databind({
    text: viewModel.name
 });
 ```
-Also, because we don't need to ```eval()``` strings from the dom every time an observable changes, this method should be faster as well.
+Also, because we don't need to ```eval()``` strings from the dom every time an observable changes, this method should be faster.
 
 ### ToDo...
 
-* Allow multiple databind calls on a single element (binding the same type more than once will result in an exception)
-* Link to a working example
-* Other ideas? let me know!
+* Allow multiple ```databind``` calls on a single element (binding the same type more than once should result in an exception)
+* Come up with better examples
+* Support better workflows for jQuery templates
+* Other ideas? Let me know!
 
 ## MIT License
 
