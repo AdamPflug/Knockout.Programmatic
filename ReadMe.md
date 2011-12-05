@@ -83,7 +83,7 @@ Also, because we don't need to ```eval()``` strings from the dom every time an o
 
 ## MIT License
 
-Copyright (c) 2001 Brandon Satrom, Carrot Pants Studios
+Copyright (c) 2001 Adam Pflug
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
