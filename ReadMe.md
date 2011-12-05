@@ -75,6 +75,10 @@ $('#greeting span').databind({
 ```
 Also, because we don't need to ```eval()``` strings from the dom every time an observable changes, this method should be faster.
 
+### Additional Examples
+* [Nested Templates] (http://jsfiddle.net/AdamPflug/wcNHh/)
+* ... More to come
+
 ### ToDo...
 
 * Allow multiple ```databind``` calls on a single element (binding the same type more than once should result in an exception)
