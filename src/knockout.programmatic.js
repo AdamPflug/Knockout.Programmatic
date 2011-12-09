@@ -36,14 +36,27 @@
     };
 
     $.fn.databind = function (bindings, viewModel) {
-        var allBindingsAccessor = function () { return bindings; };
         var buildValueAccessor = function (value) {
             return function () { return value; };
         };
 
         // process each of the databindings in turn
         this.each(function () {
-            for (var bindingProperty in bindings) {
+            var bindingProperty;
+            var existingBindings = $(this).data("knockoutProgrammatic.bindings") || {};
+            var allBindingsAccessor = function () { return existingBindings; };
+
+            for (bindingProperty in bindings)  {
+                if (bindings.hasOwnProperty(bindingProperty)) {
+                    if (existingBindings[bindingProperty]) {
+                        throw new $.databind.DuplicateBindingException(bindingProperty, this);
+                    } else {
+                        existingBindings[bindingProperty] = bindings[bindingProperty];
+                    }
+                }
+            }
+
+            for (bindingProperty in bindings) {
                 if (bindings.hasOwnProperty(bindingProperty)) {
                     bindToBindingHandler({
                         element: this,
@@ -54,9 +67,18 @@
                     });
                 }
             }
-
+            $(this).data("knockoutProgrammatic.bindings", existingBindings);
         });
         return this; // preserve jquery chaining support
     };
 
+    $.databind = $.databind || {};
+    $.databind.DuplicateBindingException = function (property, element) {
+        this.property = property;
+        this.element = element;
+        this.message= "Binding '"+this.property+"' already exists on this element";
+    };
+    $.databind.DuplicateBindingException.prototype.toString = function () {
+        return this.message;
+    };
 })(jQuery);

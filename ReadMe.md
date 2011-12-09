@@ -81,9 +81,7 @@ Also, because we don't need to ```eval()``` strings from the dom every time an o
 
 ### ToDo...
 
-* Allow multiple ```databind``` calls on a single element (binding the same type more than once should result in an exception)
 * Come up with better examples
-* Support better workflows for jQuery templates
 * Other ideas? Let me know!
 
 ## MIT License

@@ -24,7 +24,6 @@ describe("Knockout jQuery DataBind", function () {
     it ("Lets sends updates to bound elements", function () {
         var handler = ko.bindingHandlers.testBindingHandler;
         
-
         spyOn(handler, "init").andCallThrough();
         $(testElement).databind({
             testBindingHandler: testObservable
@@ -47,5 +46,32 @@ describe("Knockout jQuery DataBind", function () {
         testObservable("Hello World");
 
         expect(testElement.innerText).toBe("Hello World");
+    });
+    it ("Throws an exception when you bind the same binding twice to the same element", function () {
+        $(testElement).databind({
+            testBindingHandler: testObservable
+        });
+        expect(function () {
+            $(testElement).databind({
+                testBindingHandler: testObservable
+            });
+        }).toThrow(new $.databind.DuplicateBindingException('testBindingHandler', testElement));
+        try {
+            $(testElement).databind({
+                testBindingHandler: testObservable
+            });
+        } catch (e) {
+            expect(e.toString().length).toBeGreaterThan(1);
+            expect(e.property).toBe("testBindingHandler");
+            expect(e.element).toBe(testElement);
+        }
+    });
+    it ("Should share the same all bindings object between multiple databind attempts", function () {
+        $(testElement).databind({
+            testBindingHandler: testObservable
+        });
+        $(testElement).databind({
+            checkForTestBindingHandler: testObservable
+        });
     });
 });
