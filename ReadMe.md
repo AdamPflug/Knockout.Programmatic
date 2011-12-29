@@ -10,9 +10,10 @@ Knockout.Programmatic has been tested with v1.2.1 of KnockoutJS. If you run into
 
 ## Getting Started
 
-The main purpose of Knockout.Programmatic is to move from a declarative binding syntax to a programmatic one. This has two major benefits:
+The main purpose of Knockout.Programmatic is to move from a declarative binding syntax to a programmatic one. This has three major benefits:
 * It allows for the javascript and html to be less tightly coupled.
 * It is easier to debug, because the data-binding process can be walked through with a debugger.
+* Faster because databinding can be executed before appending to the dom, minimizing repaints
 
 To get started download [KnockoutJS] (http://knockoutjs.com), jQuery, and this plugin and include them on your page.
 
@@ -82,6 +83,8 @@ Also, because we don't need to ```eval()``` strings from the dom every time an o
 ### ToDo...
 
 * Come up with better examples
+* Improve the performance of .remove() by moving away from jQuery's .data() doing manually
+* Patch KnockoutJS to support a beforeRender event for template rendering (so you can remove dom elements without clobbering all their event bindings).
 * Other ideas? Let me know!
 
 ## MIT License
