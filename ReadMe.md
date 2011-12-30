@@ -76,6 +76,17 @@ $('#greeting span').databind({
 ```
 Also, because we don't need to ```eval()``` strings from the dom every time an observable changes, this method should be faster.
 
+#### Removing databinds
+
+Sometimes you might want to remove existing databinds from a dom node. Because this plugin makes it easy to databind to elements before they're appended to the dom, it doesn't remove databinds automatically when a observable/dependency is updated while the databound node is detached (as traditional KnockoutJS does). Instead, it hooks into jQuery's cleanup functionality to unbind itself at the same time that jQuery removes data and event handlers. This happens when ```$.remove``` (as opposed to ```$.detach```), ```$.empty```, or ```$.removeData``` are called on a set of elements.
+
+Alternatively, you can explicity unbind with the ```$.undatabind([binding])``` method. This method takes one optional parameter, a string containing the name of the binding you want to remove. If this parameter is omitted then all bindings for that element will be removed.
+
+```javascript
+$('#someElement').undatabind('text'); // remove the text databinding
+$('#someElement').undatabind(); // remove all databindings
+```
+
 ### Additional Examples
 * [Nested Templates] (http://jsfiddle.net/AdamPflug/wcNHh/)
 * ... More to come
