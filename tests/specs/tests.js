@@ -135,4 +135,36 @@ describe("Knockout jQuery DataBind", function () {
             expect(testElement.innerText).toBe("Hello");
         });
     });
+
+    describe("Support work with jQuery.tmpl templates", function () {
+        // these were initially failing for KnockoutJS 2.0 because it requires an undocumented "bindingContext" parameter for bindings
+        var testData, testTemplate, testTemplateElement;
+        beforeEach(function () {
+            testData = [{t:"1"},{t:"2"},{t:"3"}];
+            testTemplate = '${ t }';
+            testTemplateElement = document.createElement('script');
+            testTemplateElement.type = "text/x-jquery-tmpl";
+            testTemplateElement.id = 'testTmpl';
+            if (jQuery.support.scriptEval) {
+                testTemplateElement.appendChild(document.createTextNode(testTemplate));
+            } else {
+                testTemplateElement.text = testTemplate; // special case because IE doesn't support appending nodes to a script tag, stolen from jQuery
+            }
+            document.body.appendChild(testTemplateElement);
+        });
+        afterEach(function () {
+            if (testTemplateElement && testTemplateElement.parentNode) {
+                testTemplateElement.parentNode.removeChild(testTemplateElement);
+            }
+        });
+        it ("Should let you data bind with a template a with a foreach handler", function () {
+            $(testElement).databind({
+                template: {
+                    name: 'testTmpl',
+                    foreach: testData
+                }
+            });
+            expect(testElement.innerText).toBe("123");
+        });
+    });
 });
