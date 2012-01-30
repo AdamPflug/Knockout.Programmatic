@@ -15,12 +15,14 @@
          * This should be more efficient than regular knockout because bindings don't need
          * to be reparsed each time an observable changes its value.
          */
+        var bindingContext = ko.bindingContext ? new ko.bindingContext(ko.utils.unwrapObservable(options.viewModel)) : {};
         if (options.bindingHandler && typeof options.bindingHandler.init == "function") {
             options.bindingHandler.init(
                 options.element,
                 options.valueAccessor,
                 options.allBindingsAccessor,
-                options.viewModel
+                options.viewModel,
+                bindingContext
             );
         }
         var updateListener = new ko.dependentObservable(function () {
@@ -29,7 +31,8 @@
                     options.element,
                     options.valueAccessor,
                     options.allBindingsAccessor,
-                    options.viewModel
+                    options.viewModel,
+                    bindingContext
                 );
             }
         }, window);
